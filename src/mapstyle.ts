@@ -5,7 +5,7 @@
  */
 export function expandMapStyle(style): string {
   // testing if the style provided is of form "maptiler://some-style"
-  const maptilerDomainRegex = /^maptiler:\/\/(.*)/;
+  const maptilerDomainRegex = /^maps.ots.vn:\/\/(.*)/;
   let match;
   const trimmed = style.trim();
   let expandedStyle;
@@ -14,10 +14,10 @@ export function expandMapStyle(style): string {
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
     expandedStyle = trimmed;
   } else if ((match = maptilerDomainRegex.exec(trimmed)) !== null) {
-    expandedStyle = `https://api.maptiler.com/maps/${match[1]}/style.json`;
+    expandedStyle = `https://maps.ots.vn/api/styles/v1/${match[1]}/style.json`;
   } else {
     // The style could also possibly just be the name of the style without any URI style
-    expandedStyle = `https://api.maptiler.com/maps/${trimmed}/style.json`;
+    expandedStyle = `https://maps.ots.vn/api/styles/v1/${trimmed}/style.json`;
   }
 
   return expandedStyle;
@@ -294,36 +294,20 @@ export type MapStyleType = {
   /**
    * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings
    */
-  STREETS: MapStyleType["STREETS_V2"];
-  /**
-   * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings
-   */
-  STREETS_V2: ReferenceMapStyle & {
+  STREETS_V1: ReferenceMapStyle & {
     /**
      * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings.
      */
     DEFAULT: MapStyleVariant;
     /**
      * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings, in dark mode.
-     */
-    DARK: MapStyleVariant;
-    /**
-     * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings, in light mode.
-     */
-    LIGHT: MapStyleVariant;
-    /**
-     * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings, in night mode.
      */
     NIGHT: MapStyleVariant;
-    /**
-     * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings, with a pastel color palette.
-     */
-    PASTEL: MapStyleVariant;
   };
   /**
    * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings
    */
-  STREETS_V4: ReferenceMapStyle & {
+  NAVIGATION_V1: ReferenceMapStyle & {
     /**
      * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings.
      */
@@ -331,531 +315,106 @@ export type MapStyleType = {
     /**
      * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings, in dark mode.
      */
-    DARK: MapStyleVariant;
-    /**
-     * Suitable for navigation, with high level of detail on urban areas, plenty of POIs and 3D buildings, with a pastel color palette.
-     */
-    PASTEL: MapStyleVariant;
+    NIGHT: MapStyleVariant;
   };
 
-  BASE_V4: ReferenceMapStyle & {
+  /**
+   * A minimalist street-oriented style without POI
+   */
+  BASIC_V1: ReferenceMapStyle & {
     /**
-     * Light and informative map, for general use.
+     * A minimalist street-oriented style without POI
      */
     DEFAULT: MapStyleVariant;
     /**
-     * Darker version of the base style, for night use.
+     * A minimalist street-oriented style without POI, in dark mode
      */
     DARK: MapStyleVariant;
     /**
-     * Light version of the base style, for day use.
+     * A minimalist street-oriented style without POI, in light mode
      */
     LIGHT: MapStyleVariant;
-    /**
-     * A clear and informative map, for general use.
-     */
-    AI: MapStyleVariant;
-  };
-
-  /**
-   * Suitable for outdoor activities. With elevation isolines and hillshading.
-   */
-  OUTDOOR: ReferenceMapStyle & {
-    /**
-     * Suitable for outdoor activities. With elevation isolines and hillshading.
-     */
-    DEFAULT: MapStyleVariant;
-
-    /**
-     * Suitable for outdoor activities. With elevation isolines and hillshading, in dark mode.
-     */
-    DARK: MapStyleVariant;
-  };
-
-  /**
-   * Suitabe for winter outdoor activities. With ski tracks, elevation isolines and hillshading.
-   */
-  WINTER: ReferenceMapStyle & {
-    /**
-     * Suitabe for winter outdoor activities. With ski tracks, elevation isolines and hillshading.
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * Suitabe for winter outdoor activities. With ski tracks, elevation isolines and hillshading, in dark mode.
-     */
-    DARK: MapStyleVariant;
   };
 
   /**
    * High resolution imagery only, without any label.
    */
-  SATELLITE: ReferenceMapStyle & {
+  SATELLITE_V1: ReferenceMapStyle & {
     /**
      * High resolution imagery only, without any label.
      */
     DEFAULT: MapStyleVariant;
-  };
-
-  /**
-   * High resolution imagery with labels, political borders and roads.
-   */
-  HYBRID: ReferenceMapStyle & {
     /**
      * High resolution imagery with labels, political borders and roads.
      */
-    DEFAULT: MapStyleVariant;
-  };
-
-  /**
-   * A minimalist street-oriented style without POI
-   */
-  BASIC: ReferenceMapStyle & {
-    /**
-     * A minimalist street-oriented style without POI
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * A minimalist street-oriented style without POI, in dark mode
-     */
-    DARK: MapStyleVariant;
-    /**
-     * A minimalist street-oriented style without POI, in light mode
-     */
-    LIGHT: MapStyleVariant;
-  };
-  /**
-   * A minimalist street-oriented style without POI
-   */
-  BASIC_V2: ReferenceMapStyle & {
-    /**
-     * A minimalist street-oriented style without POI
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * A minimalist street-oriented style without POI, in dark mode
-     */
-    DARK: MapStyleVariant;
-    /**
-     * A minimalist street-oriented style without POI, in light mode
-     */
-    LIGHT: MapStyleVariant;
-  };
-
-  /**
-   * A bright street-oriented style, a nice alternative to `streets`
-   */
-  BRIGHT: ReferenceMapStyle & {
-    /**
-     * A bright street-oriented style, a nice alternative to `streets`
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * A bright street-oriented style, a nice alternative to `streets`, in dark mode
-     */
-    DARK: MapStyleVariant;
-    /**
-     * A bright street-oriented style, a nice alternative to `streets`, in light mode
-     */
-    LIGHT: MapStyleVariant;
-    /**
-     * A bright street-oriented style, a nice alternative to `streets`, with a soft pastel color palette
-     */
-    PASTEL: MapStyleVariant;
-  };
-
-  /**
-   * Classic OpenStreetMap style
-   */
-  OPENSTREETMAP: ReferenceMapStyle & {
-    DEFAULT: MapStyleVariant;
-  };
-
-  /**
-   * A nice high-contrast, yet less saturated alternative to the `outdoor` style, with hillshading, 3D buildings and fairly high street details
-   */
-  TOPO: ReferenceMapStyle & {
-    /**
-     * A nice high-contrast, yet less saturated alternative to the `outdoor` style, with hillshading, 3D buildings and fairly high street details
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * A nice high-contrast, yet less saturated alternative to the `outdoor` style, with hillshading, 3D buildings and fairly high street details, in dark mode
-     */
-    DARK: MapStyleVariant;
-    /**
-     * A nice high-contrast, and high saturation alternative to the `outdoor` style, with hillshading, 3D buildings and fairly high street details
-     */
-    SHINY: MapStyleVariant;
-    /**
-     * A nice low-contrast, alternative to the `outdoor` style, with hillshading, 3D buildings and fairly high street details, using a soft pastel color palette
-     */
-    PASTEL: MapStyleVariant;
-
-    /**
-     * A nice very high-contrast, yet less saturated alternative to the `outdoor` style, with hillshading, 3D buildings and fairly high street details
-     */
-    TOPOGRAPHIQUE: MapStyleVariant;
-  };
-
-  /**
-   * A nice alternative to `streets` with a soft color palette
-   */
-  VOYAGER: ReferenceMapStyle & {
-    /**
-     * A nice alternative to `streets` with a soft color palette
-     *
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * A nice alternative to `streets`, in very dark mode
-     */
-    DARK: MapStyleVariant;
-    /**
-     * A nice alternative to `streets`, in light mode
-     */
-    LIGHT: MapStyleVariant;
-    /**
-     * A nice alternative to `streets` with a soft sepia color palette and vintage look
-     */
-    VINTAGE: MapStyleVariant;
-  };
-
-  /**
-   * A bold very high contrast black and white (no gray!) style for the city
-   */
-  TONER: ReferenceMapStyle & {
-    /**
-     * A bold very high contrast black and white (no gray!) style for the city
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     * A bold very high contrast black and white (no gray!) style for the city, without any label
-     */
-    BACKGROUND: MapStyleVariant;
-    /**
-     * A bold very high contrast, yet faded, style for the city
-     */
-    LITE: MapStyleVariant;
-    /**
-     * A bold very high contrast black and white (no gray!) style for the city, with no building, only roads!
-     */
-    LINES: MapStyleVariant;
-  };
-
-  /**
-   * Minimalist style, perfect for data visualization
-   */
-  DATAVIZ: ReferenceMapStyle & {
-    /**
-     *  Minimalist style, perfect for data visualization
-     */
-    DEFAULT: MapStyleVariant;
-
-    /**
-     *  Minimalist style, perfect for data visualization in dark mode
-     */
-    DARK: MapStyleVariant;
-
-    /**
-     *  Minimalist style, perfect for data visualization in light mode
-     */
-    LIGHT: MapStyleVariant;
-  };
-
-  /**
-   * Explore deep see trenches and mountains, with isolines and depth labels
-   */
-  OCEAN: ReferenceMapStyle & {
-    /**
-     * Explore deep see trenches and mountains, with isolines and depth labels
-     */
-    DEFAULT: MapStyleVariant;
-  };
-
-  /**
-   * Neutral greyscale style with hillshading suitable for colorful terrain-aware visualization
-   */
-  BACKDROP: ReferenceMapStyle & {
-    /**
-     *  Neutral greyscale style with hillshading suitable for colorful terrain-aware visualization
-     */
-    DEFAULT: MapStyleVariant;
-
-    /**
-     *  Dark greyscale style with hillshading suitable for colorful terrain-aware visualization
-     */
-    DARK: MapStyleVariant;
-
-    /**
-     *  Light greyscale style with hillshading suitable for colorful terrain-aware visualization
-     */
-    LIGHT: MapStyleVariant;
-  };
-
-  LANDSCAPE: MapStyleType["LANDSCAPE_V2"];
-
-  LANDSCAPE_V2: ReferenceMapStyle & {
-    /**
-     *  Light terrain map for data overlays and visualisations
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     *  Dark terrain map for data overlays and visualisations
-     */
-    DARK: MapStyleVariant;
-    /**
-     *  Vivid terrain map for data overlays and visualisations
-     */
-    VIVID: MapStyleVariant;
-  };
-
-  LANDSCAPE_V4: ReferenceMapStyle & {
-    /**
-     *  Light terrain map for data overlays and visualisations
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     *  Dark terrain map for data overlays and visualisations
-     */
-    DARK: MapStyleVariant;
-    /**
-     *  Vivid terrain map for data overlays and visualisations
-     */
-    VIVID: MapStyleVariant;
-  };
-  /**
-   *  Watercolor map for creative use
-   */
-  AQUARELLE: ReferenceMapStyle & {
-    /**
-     *  Watercolor map for creative use
-     */
-    DEFAULT: MapStyleVariant;
-    /**
-     *  Dark watercolor map for creative use
-     */
-    DARK: MapStyleVariant;
-    /**
-     *  Vivid watercolor map for creative use
-     */
-    VIVID: MapStyleVariant;
+    HYBRID: MapStyleVariant;
   };
 };
 
 export const mapStylePresetList: Array<MapStylePreset> = [
   {
-    referenceStyleID: "STREETS_V2",
+    referenceStyleID: "STREETS_V1",
     name: "Streets",
     description: "",
     variants: [
       {
-        id: "streets-v2",
-        name: "Default v2",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"streets-v2" is deprecated, use "streets-v4" instead`,
-      },
-      {
-        id: "streets-v2-dark",
-        name: "Dark v2",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"streets-v2-dark" is deprecated, use "streets-v4-dark" instead`,
-      },
-      {
-        id: "streets-v2-light",
-        name: "Light v2",
-        variantType: "LIGHT",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"streets-v2-light" is deprecated, use "streets-v4-light" instead`,
-      },
-      {
-        id: "streets-v2-night",
-        name: "Night v2",
-        variantType: "NIGHT",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"streets-v2-night" is deprecated, use "streets-v4-night" instead`,
-      },
-      {
-        id: "streets-v2-pastel",
-        name: "Pastel v2",
-        variantType: "PASTEL",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"streets-v2-pastel" is deprecated, use "streets-v4-pastel" instead`,
-      },
-    ],
-  },
-  {
-    referenceStyleID: "STREETS_V4",
-    name: "Streets",
-    description: "",
-    variants: [
-      {
-        id: "streets-v4",
+        id: "gtelmaps-streets-v1",
         name: "Default",
         variantType: "DEFAULT",
         description: "",
         imageURL: "",
       },
       {
-        id: "streets-v4-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "streets-v4-pastel",
-        name: "Pastel",
-        variantType: "PASTEL",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-  {
-    referenceStyleID: "BASE_V4",
-    name: "Base",
-    description: "",
-    variants: [
-      {
-        id: "base-v4",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "base-v4-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "base-v4-light",
-        name: "Light",
-        variantType: "LIGHT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "base-v4-ai",
-        name: "Base AI",
+        id: "gtelmaps-streets-night-v1",
+        name: "Night",
         variantType: "NIGHT",
         description: "",
         imageURL: "",
       },
     ],
   },
-
   {
-    referenceStyleID: "OUTDOOR",
-    name: "Outdoor",
+    referenceStyleID: "NAVIGATION_V1",
+    name: "Navigation",
     description: "",
     variants: [
       {
-        id: "outdoor-v2",
+        id: "gtelmaps-navigation-day-v1",
         name: "Default",
         variantType: "DEFAULT",
         description: "",
         imageURL: "",
       },
       {
-        id: "outdoor-v2-dark",
-        name: "Dark",
-        variantType: "DARK",
+        id: "gtelmaps-navigation-night-v1",
+        name: "Night",
+        variantType: "NIGHT",
         description: "",
         imageURL: "",
       },
     ],
   },
-
   {
-    referenceStyleID: "WINTER",
-    name: "Winter",
-    description: "",
-    variants: [
-      {
-        id: "winter-v2",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "winter-v2-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "SATELLITE",
-    name: "Satellite",
-    description: "",
-    variants: [
-      {
-        id: "satellite",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "HYBRID",
-    name: "Hybrid",
-    description: "",
-    variants: [
-      {
-        id: "hybrid",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "BASIC_V2",
+    referenceStyleID: "BASIC_V1",
     name: "Basic",
     description: "",
     variants: [
       {
-        id: "basic-v2",
+        id: "gtelmaps-basic-v1",
         name: "Default",
         variantType: "DEFAULT",
         description: "",
         imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"basic-v2" is deprecated, use "basic-v4" instead`,
       },
       {
-        id: "basic-v2-dark",
+        id: "gtelmaps-dark-v1",
         name: "Dark",
         variantType: "DARK",
         description: "",
         imageURL: "",
       },
       {
-        id: "basic-v2-light",
+        id: "gtelmaps-light-v1",
         name: "Light",
         variantType: "LIGHT",
         description: "",
@@ -865,334 +424,21 @@ export const mapStylePresetList: Array<MapStylePreset> = [
   },
 
   {
-    referenceStyleID: "BRIGHT",
-    name: "Bright",
+    referenceStyleID: "SATELLITE_V1",
+    name: "Satellite",
     description: "",
     variants: [
       {
-        id: "bright-v2",
+        id: "gtelmaps-satellite-v1",
         name: "Default",
         variantType: "DEFAULT",
         description: "",
         imageURL: "",
       },
       {
-        id: "bright-v2-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "bright-v2-light",
-        name: "Light",
-        variantType: "LIGHT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "bright-v2-pastel",
-        name: "Pastel",
-        variantType: "PASTEL",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "OPENSTREETMAP",
-    name: "OpenStreetMap",
-    description: "",
-    variants: [
-      {
-        id: "openstreetmap",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-  {
-    referenceStyleID: "TOPO",
-    name: "Topo",
-    description: "",
-    variants: [
-      {
-        id: "topo-v2",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "topo-v2-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "topo-v2-shiny",
-        name: "Shiny",
-        deprecated: true,
-        variantType: "SHINY",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "topo-v2-pastel",
-        name: "Pastel",
-        variantType: "PASTEL",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "topo-v2-topographique",
-        name: "Topographique",
-        variantType: "TOPOGRAPHIQUE",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "VOYAGER",
-    name: "Voyager",
-    description: "",
-    variants: [
-      {
-        id: "voyager-v2",
-        name: "Default",
-        deprecated: true,
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "voyager-v2-darkmatter",
-        name: "Darkmatter",
-        deprecated: true,
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "voyager-v2-positron",
-        name: "Positron",
-        deprecated: true,
-        variantType: "LIGHT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "voyager-v2-vintage",
-        name: "Vintage",
-        deprecated: true,
-        variantType: "VINTAGE",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "TONER",
-    name: "Toner",
-    description: "",
-    variants: [
-      {
-        id: "toner-v2",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "toner-v2-background",
-        name: "Background",
-        variantType: "BACKGROUND",
-        deprecated: true,
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "toner-v2-lite",
-        name: "Lite",
-        variantType: "LITE",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "toner-v2-lines",
-        name: "Lines",
-        variantType: "LINES",
-        deprecated: true,
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "DATAVIZ",
-    name: "Dataviz",
-    description: "",
-    variants: [
-      {
-        id: "dataviz",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "dataviz-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "dataviz-light",
-        name: "Light",
-        variantType: "LIGHT",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "BACKDROP",
-    name: "Backdrop",
-    description: "",
-    variants: [
-      {
-        id: "backdrop",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "backdrop-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "backdrop-light",
-        name: "Light",
-        variantType: "LIGHT",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-
-  {
-    referenceStyleID: "OCEAN",
-    name: "Ocean",
-    description: "",
-    variants: [
-      {
-        id: "ocean",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-  {
-    referenceStyleID: "AQUARELLE",
-    name: "Aquarelle",
-    description: "Watercolor map for creative use",
-    variants: [
-      {
-        id: "aquarelle",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "aquarelle-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "aquarelle-vivid",
-        name: "Vivid",
-        variantType: "VIVID",
-        description: "",
-        imageURL: "",
-      },
-    ],
-  },
-  {
-    referenceStyleID: "LANDSCAPE_V2",
-    name: "Landscape",
-    description: "Terrain map for data overlays and visualisations",
-    variants: [
-      {
-        id: "landscape",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"landscape" is deprecated, use "landscape-v4" instead`,
-      },
-      {
-        id: "landscape-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"landscape-dark" is deprecated, use "landscape-v4-dark" instead`,
-      },
-      {
-        id: "landscape-vivid",
-        name: "Vivid",
-        variantType: "VIVID",
-        description: "",
-        imageURL: "",
-        deprecated: true,
-        deprecationMessage: `"landscape-vivid" is deprecated, use "landscape-v4-vivid" instead`,
-      },
-    ],
-  },
-  {
-    referenceStyleID: "LANDSCAPE_V4",
-    name: "Landscape",
-    description: "Terrain map for data overlays and visualisations",
-    variants: [
-      {
-        id: "landscape-v4",
-        name: "Default",
-        variantType: "DEFAULT",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "landscape-v4-dark",
-        name: "Dark",
-        variantType: "DARK",
-        description: "",
-        imageURL: "",
-      },
-      {
-        id: "landscape-v4-vivid",
-        name: "Vivid",
-        variantType: "VIVID",
+        id: "gtelmaps-satellite-streets-v1",
+        name: "Hybrid",
+        variantType: "HYBRID",
         description: "",
         imageURL: "",
       },
@@ -1206,9 +452,8 @@ export const mapStylePresetList: Array<MapStylePreset> = [
  * Note: the type definition `MapStyleType` will need to be updated to reflect this.
  */
 const defaultReferenceStyleMap = {
-  STREETS: "STREETS_V2",
-  BASIC: "BASIC_V2",
-  LANDSCAPE: "LANDSCAPE_V2",
+  STREETS: "STREETS_V1",
+  BASIC: "BASIC_V1",
 };
 
 function applyVersionToDefaultReferenceStyle(
