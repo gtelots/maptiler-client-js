@@ -4,8 +4,8 @@
  * @returns
  */
 export function expandMapStyle(style): string {
-  // testing if the style provided is of form "maptiler://some-style"
-  const maptilerDomainRegex = /^maps.ots.vn:\/\/(.*)/;
+  // testing if the style provided is of form "gtelmaps://some-style"
+  const gtelmapsDomainRegex = /^maps.ots.vn:\/\/(.*)/;
   let match;
   const trimmed = style.trim();
   let expandedStyle;
@@ -13,7 +13,7 @@ export function expandMapStyle(style): string {
   // The style was possibly already given as expanded URL
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
     expandedStyle = trimmed;
-  } else if ((match = maptilerDomainRegex.exec(trimmed)) !== null) {
+  } else if ((match = gtelmapsDomainRegex.exec(trimmed)) !== null) {
     expandedStyle = `https://maps.ots.vn/api/styles/v1/${match[1]}/style.json`;
   } else {
     // The style could also possibly just be the name of the style without any URI style
@@ -57,7 +57,7 @@ export class MapStyleVariant {
     private variantType: string,
 
     /**
-     * MapTiler Cloud id
+     * GTEL Maps Cloud id
      */
     private id: string,
 
@@ -100,7 +100,7 @@ export class MapStyleVariant {
   }
 
   /**
-   * Get the variant type (eg. "DEFAULT", "DARK", "PASTEL", etc.)
+   * Get the variant type (eg. "DEFAULT", "DARK", "LIGHT", etc.)
    * @returns
    */
   getType(): string {
@@ -108,7 +108,7 @@ export class MapStyleVariant {
   }
 
   /**
-   * Get the MapTiler Cloud id
+   * Get the GTEL Maps Cloud id
    * @returns
    */
   getId(): string {
@@ -142,7 +142,7 @@ export class MapStyleVariant {
 
   /**
    * Retrieve the variant of a given type. If not found, will return the "DEFAULT" variant.
-   * (eg. _this_ "DARK" variant does not have any "PASTEL" variant, then the "DEFAULT" is returned)
+   * (eg. _this_ "DARK" variant does not have any "LIGHT" variant, then the "DEFAULT" is returned)
    * @param variantType
    * @returns
    */
@@ -288,7 +288,7 @@ export class ReferenceMapStyle {
 }
 
 /**
- * All the styles and variants maintained by MapTiler.
+ * All the styles and variants maintained by GTEL Maps.
  */
 export type MapStyleType = {
   /**
@@ -498,7 +498,7 @@ function makeReferenceStyleProxy(referenceStyle: ReferenceMapStyle) {
 
       // This variant does not exist for this style, but since it's full uppercase
       // we guess that the dev tries to access a style variant. So instead of
-      // returning the default (STREETS.DEFAULT), we return the non-variant of the current style
+      // returning the default (STREETS_V1.DEFAULT), we return the non-variant of the current style
       if (prop.toString().toUpperCase() === (prop as string)) {
         return referenceStyle.getDefaultVariant();
       }
@@ -548,7 +548,7 @@ export function styleToStyle(
       .getId();
   }
 
-  // If the provided style is a shorthand (eg. "streets-v2") then we make sure it's trimmed and lowercase
+  // If the provided style is a shorthand (eg. "gtelmaps-streets-v1") then we make sure it's trimmed and lowercase
   if (typeof style === "string" || style instanceof String) {
     return style.trim().toLowerCase();
   }
@@ -563,11 +563,10 @@ export function styleToStyle(
 }
 
 /**
- * Contains all the reference map style created by MapTiler team as well as all the variants.
- * For example, `MapStyle.STREETS` and the variants:
- * - `MapStyle.STREETS.DARK`
- * - `MapStyle.STREETS.LIGHT`
- * - `MapStyle.STREETS.PASTEL`
+ * Contains all the reference map style created by GTEL Maps team as well as all the variants.
+ * For example, `MapStyle.STREETS_V1` and the variants:
+ * - `MapStyle.STREETS_V1.DEFAULT`
+ * - `MapStyle.STREETS_V1.NIGHT`
  *
  */
 export const MapStyle: MapStyleType = buildMapStyles();

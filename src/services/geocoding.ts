@@ -308,7 +308,7 @@ function addCommonForwardAndReverseGeocodingOptions(
 ) {
   const { apiKey, limit, types, excludeTypes } = options;
 
-  searchParams.set("key", apiKey ?? config.apiKey);
+  searchParams.set("apikey", apiKey ?? config.apiKey);
 
   if (limit !== undefined) {
     searchParams.set("limit", String(limit));
@@ -378,7 +378,7 @@ async function forward(
 
   const endpoint = new URL(
     `geocoding/${encodeURIComponent(query)}.json`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
 
   addForwardGeocodingOptions(endpoint.searchParams, options);
@@ -412,7 +412,7 @@ async function reverse(
 
   const endpoint = new URL(
     `geocoding/${position[0]},${position[1]}.json`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
 
   addCommonForwardAndReverseGeocodingOptions(endpoint.searchParams, options);
@@ -441,9 +441,9 @@ async function byId(
   id: string,
   options: ByIdGeocodingOptions = {},
 ): Promise<GeocodingSearchResult> {
-  const endpoint = new URL(`geocoding/${id}.json`, defaults.maptilerApiURL);
+  const endpoint = new URL(`geocoding/${id}.json`, defaults.gtelmapsApiURL);
 
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   addLanguageGeocodingOptions(endpoint.searchParams, options);
 
@@ -480,7 +480,7 @@ async function batch(
 
   const endpoint = new URL(
     `geocoding/${joinedQuery}.json`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
 
   addForwardGeocodingOptions(endpoint.searchParams, options);

@@ -52,7 +52,7 @@ export const NonISOLanguage = {
   } as LanguageInfo,
 
   /**
-   * The OSM language using latin script. MapTiler discourages its use as a primary language setting due to the lack of actual linguistic specificity,
+   * The OSM language using latin script. GTEL Maps discourages its use as a primary language setting due to the lack of actual linguistic specificity,
    * though it can be an handy fallback. This is not to be confused with the "Classical Latin" language, which is available under the tag `.CLASSICAL_LATIN`.
    */
   LATIN: {
@@ -65,7 +65,7 @@ export const NonISOLanguage = {
   } as LanguageInfo,
 
   /**
-   * The OSM language using non-latin script. MapTiler discourages its use as a primary language setting due to the lack of actual linguistic specificity,
+   * The OSM language using non-latin script. GTEL Maps discourages its use as a primary language setting due to the lack of actual linguistic specificity,
    * though it can be an handy fallback.
    */
   NON_LATIN: {

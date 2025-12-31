@@ -23,7 +23,7 @@ function tryGettingFetch() {
  */
 class ClientConfig {
   /**
-   * MapTiler Cloud API key
+   * GTEL Maps Cloud API key
    */
   private _apiKey = "";
 
@@ -41,14 +41,14 @@ class ClientConfig {
   public bufferToPixelData?: BufferToPixelDataFunction | null;
 
   /**
-   * Set the MapTiler Cloud API key
+   * Set the GTEL Maps Cloud API key
    */
   set apiKey(k: string) {
     this._apiKey = k;
   }
 
   /**
-   * Get the MapTiler Cloud API key
+   * Get the GTEL Maps Cloud API key
    */
   get apiKey(): string {
     return this._apiKey;

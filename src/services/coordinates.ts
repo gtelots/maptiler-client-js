@@ -122,9 +122,9 @@ async function search(
 
   const endpoint = new URL(
     `coordinates/search/${query}.json`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   if ("limit" in options) {
     endpoint.searchParams.set("limit", options.limit.toString());
@@ -215,9 +215,9 @@ async function transform(
 
   const endpoint = new URL(
     `coordinates/transform/${coordinatesStr}.json`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   if ("sourceCrs" in options) {
     endpoint.searchParams.set("s_srs", options.sourceCrs.toString());

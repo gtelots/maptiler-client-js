@@ -5,7 +5,7 @@ import {
   coordinates,
   data,
   Language,
-} from '../dist/maptiler-client.mjs';
+} from '../dist/gtelmaps-client.mjs';
 
 // For this examople to work, you must bring your own node-compatible fetch,
 // unles you are using a version of Nodejs that already contains fetch (>=18)

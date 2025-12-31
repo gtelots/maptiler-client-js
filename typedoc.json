@@ -1,6 +1,6 @@
 {
   "entryPoints": ["./src/services/*.ts", "./src/language.ts", "src/config.ts"],
-  "name": "MapTiler Client",
+  "name": "GTEL Maps Client",
   "plugin": [],
   "out": "docs",
   "excludePrivate": true,

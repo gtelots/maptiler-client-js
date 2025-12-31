@@ -123,8 +123,8 @@ export type GeolocationResult = {
 async function info(
   options: GeolocationInfoOptions = {},
 ): Promise<GeolocationResult> {
-  const endpoint = new URL(`geolocation/ip.json`, defaults.maptilerApiURL);
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  const endpoint = new URL(`geolocation/ip.json`, defaults.gtelmapsApiURL);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   if ("elevation" in options) {
     endpoint.searchParams.set(

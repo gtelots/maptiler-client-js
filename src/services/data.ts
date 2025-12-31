@@ -34,9 +34,9 @@ async function get(
 
   const endpoint = new URL(
     `data/${encodeURIComponent(dataId)}/features.json`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
   const urlWithParams = endpoint.toString();
 
   const res = await callFetch(urlWithParams);

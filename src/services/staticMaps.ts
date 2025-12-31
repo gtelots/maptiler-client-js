@@ -216,7 +216,7 @@ function centered(
     `maps/${encodeURIComponent(style)}/static/${center[0]},${
       center[1]
     },${zoom}/${width}x${height}${scale}.${format}`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
 
   if ("attribution" in options) {
@@ -267,7 +267,7 @@ function centered(
     endpoint.searchParams.set("path", pathStr);
   }
 
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   return endpoint.toString();
 }
@@ -300,7 +300,7 @@ function bounded(
     `maps/${encodeURIComponent(style)}/static/${boundingBox[0]},${
       boundingBox[1]
     },${boundingBox[2]},${boundingBox[3]}/${width}x${height}${scale}.${format}`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
 
   if ("attribution" in options) {
@@ -355,7 +355,7 @@ function bounded(
     endpoint.searchParams.set("path", pathStr);
   }
 
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   return endpoint.toString();
 }
@@ -390,7 +390,7 @@ function automatic(options: AutomaticStaticMapOptions = {}): string {
     `maps/${encodeURIComponent(
       style,
     )}/static/auto/${width}x${height}${scale}.${format}`,
-    defaults.maptilerApiURL,
+    defaults.gtelmapsApiURL,
   );
 
   if ("attribution" in options) {
@@ -445,7 +445,7 @@ function automatic(options: AutomaticStaticMapOptions = {}): string {
     endpoint.searchParams.set("path", pathStr);
   }
 
-  endpoint.searchParams.set("key", options.apiKey ?? config.apiKey);
+  endpoint.searchParams.set("apikey", options.apiKey ?? config.apiKey);
 
   return endpoint.toString();
 }

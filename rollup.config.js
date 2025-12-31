@@ -5,7 +5,7 @@ import globals from "rollup-plugin-node-globals";
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 
-const name = "maptiler-client"
+const name = "gtelmaps-client"
 
 const bundles = [
   // ES module, not minified + sourcemap
@@ -62,7 +62,7 @@ const bundles = [
     ],
     output: [
       {
-        name: "maptilerClient",
+        name: "gtelmapsClient",
         file: `dist/${name}.umd.js`, 
         format: "umd",
         sourcemap: true
@@ -121,7 +121,7 @@ if (process.env.NODE_ENV === "production") {
     ],
     output: [
       {
-        name: "maptilerClient",
+        name: "gtelmapsClient",
         file: `dist/${name}.umd.min.js`, 
         format: "umd",
         sourcemap: false

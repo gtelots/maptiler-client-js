@@ -71,9 +71,9 @@ async function computeOnServer(
       const batchEncoded = batch.map((pos) => pos.join(",")).join(";");
       const endpoint = new URL(
         `elevation/${batchEncoded}.json`,
-        defaults.maptilerApiURL,
+        defaults.gtelmapsApiURL,
       );
-      endpoint.searchParams.set("key", apiKey);
+      endpoint.searchParams.set("apikey", apiKey);
       return callFetch(endpoint.toString());
     },
   );
@@ -109,9 +109,9 @@ async function computeOnClient(
   if (!terrainTileJson) {
     const endpoint = new URL(
       `tiles/${TERRAIN_TILESET}/tiles.json`,
-      defaults.maptilerApiURL,
+      defaults.gtelmapsApiURL,
     );
-    endpoint.searchParams.set("key", apiKey);
+    endpoint.searchParams.set("apikey", apiKey);
     const urlWithParams = endpoint.toString();
     const res = await callFetch(urlWithParams);
     if (res.ok) {

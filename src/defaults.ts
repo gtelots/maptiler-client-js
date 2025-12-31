@@ -2,7 +2,7 @@
  * Some default settings for the SDK
  */
 const defaults = {
-  maptilerApiURL: "https://maps.ots.vn/",
+  gtelmapsApiURL: "https://maps.ots.vn/",
   mapStyle: "gtelmaps-streets-v1",
 };
 
